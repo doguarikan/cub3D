@@ -4,9 +4,9 @@ int	create_xpm(t_map *cub)
 {
 	int	x;
 	int	y;
-
+//HATALI
 	cub->wall_ea = mlx_xpm_file_to_image(cub->mlx, \
-					"./textures/wall_ea.xpm", &x, &y);
+					//MAPTEN OKICAZ DOSYADAN DEĞİL"./textures/wall_ea.xpm", &x, &y);
 	cub->wall_no = mlx_xpm_file_to_image(cub->mlx, \
 					"./textures/wall_no.xpm", &x, &y);
 	cub->wall_so = mlx_xpm_file_to_image(cub->mlx, \

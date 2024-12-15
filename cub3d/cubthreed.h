@@ -18,16 +18,14 @@ typedef struct s_map
 	char	**map_line;
 	int		p_x;
 	int		p_y;
-	int		exit_count;
 	int		player_count;
-	int		coin_count;
-	int		playermove;
 	int		map_x_line;
 	int		map_y_line;
 	char	*f_name;
 	void	*mlx;
 	void	*mlx_win;
 }				t_map;
+
 
 int	create_xpm(t_map *cub);
 int	safe_exit(t_map *cub);

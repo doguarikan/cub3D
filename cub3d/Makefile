@@ -2,10 +2,10 @@ NAME = cub3D
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
 FRAMES = -framework OpenGL -framework AppKit
-SOURCES =  main.c win.c
+SOURCES =  main.c 
 OBJS = $(SOURCES:.c=.o)
 
-MLX = ./mlx/libmlx.a
+MLX = ./mlx/libmlx_Linux.a
 LIBFT = ./libft/libft.a
 
 

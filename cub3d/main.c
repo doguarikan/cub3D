@@ -1,4 +1,5 @@
 #include "cubthreed.h"
+
 int	init_map(t_map *cub)
 {
 	create_xpm(cub);
@@ -9,9 +10,35 @@ int	init_map(t_map *cub)
 	return(0);
 }
 
-int	main()
+int	arg_checker(int argc, char *argv)
+{
+	int	len;
+
+	len = ft_strlen(argv);
+	if (argc != 2)
+	{
+		ft_printf("Error : Invalid number of arguments!\n");
+		return (1);
+	}
+	if (argv[len - 1] != 'b' && argv[len - 2] != 'u' && \
+			argv[len - 3] != 'c' && argv[len - 4] != '.')
+	{
+		ft_printf("Error : File extension must be .cub!\n");
+		return (1);
+	}
+	return (0);
+}
+
+
+int	main(int argc, char **argv)
 {
 	t_map	*cub;
+
+	if (arg_checker(argc, argv[1]) || map_read_check(&so, argv[1]))
+		return (1);
+	if (map_checker(&so))
+		return (1);
+
 	cub = (t_map *)malloc(sizeof(t_map));
 	if (!cub)
 		return (1);
