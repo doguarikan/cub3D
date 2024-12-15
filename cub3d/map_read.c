@@ -1,54 +1,36 @@
+
 #include "cubthreed.h"
 
-int map_reader(t_map *cub)
-{
-
-}
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   map_read.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rcan <rcan@student.42.fr>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 18:33:13 by rcan              #+#    #+#             */
-/*   Updated: 2024/05/09 18:33:13 by rcan             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "so_long.h"
-
-int	read_chars(t_map *so, char *f_name)
+int	read_chars(t_map *cub, char *f_name)
 {
 	int	fd;
 	int	i;
 
-	read_map(so, f_name);
-	empty_map(so);
-	if (!(so->map_line) || so->map_y_line <= 0)
+	read_map(cub, f_name);
+	empty_map(cub);
+	if (!(cub->tmp_map) || cub->map_y_line <= 0)
 	{
-		so->map_line = NULL;
+		cub->tmp_map = NULL;
 		return (1);
 	}
 	fd = open(f_name, O_RDONLY);
 	if (fd == -1)
 	{
-		free(so->map_line);
+		free(cub->tmp_map);
 		return (1);
 	}
 	i = 0;
-	so->map_line[i] = get_next_line(fd);
-	while (so->map_line[i])
+	cub->tmp_map[i] = get_next_line(fd);
+	while (cub->tmp_map[i])
 	{
 		i++;
-		so->map_line[i] = get_next_line(fd);
+		cub->tmp_map[i] = get_next_line(fd);
 	}
 	close(fd);
 	return (0);
 }
 
-void	read_map(t_map *so, char *f_name)
+void	read_map(t_map *cub, char *f_name)
 {
 	int		len;
 	int		fd;
@@ -57,7 +39,7 @@ void	read_map(t_map *so, char *f_name)
 	fd = open(f_name, O_RDONLY);
 	if (fd == -1)
 	{
-		so->map_y_line = 0;
+		cub->map_y_line = 0;
 		return ;
 	}
 	len = 0;
@@ -68,33 +50,62 @@ void	read_map(t_map *so, char *f_name)
 	}
 	len++;
 	close(fd);
-	so->map_line = malloc(sizeof(char *) * len + 1);
-	if (!so->map_line)
+	cub->tmp_map = malloc(sizeof(char *) * len + 1);
+	if (!cub->tmp_map)
 		return ;
-	so->map_line[len + 1] = NULL;
-	so->map_y_line = len;
+	cub->tmp_map[len + 1] = NULL;
+	cub->map_y_line = len;
 }
 
-void	free_map(t_map *so)
+void	empty_map(t_map *cub)
+{
+	if (cub->map_y_line == 1)
+	{
+		//ft_printf("Error : empty map or invalid map!\n");
+		exit (0);
+	}
+}
+
+int split_map(t_map *cub)
 {
 	int	i;
 
 	i = 0;
-	while (i < so->map_y_line)
+	while(cub->tmp_map[i])
 	{
-		free(so->map_line[i]);
+		split_line(cub, cub->tmp_map[i], i);
 		i++;
 	}
-	free(so->map_line);
+	return i;
 }
 
-
-
-void	empty_map(t_map *so)
+void	split_line(t_map *cub, char* line, int i) //??????!!! sırayı tutalım
 {
-	if (so->map_y_line == 1)
+	if(!ft_strncmp(line, "NO", 2))
 	{
-		ft_printf("Error : empty map or invalid map!\n");
-		exit (0);
+		cub->wall_no = line + 3; // araya biden fazla bosluk olabilir mi 
 	}
+	else if(!ft_strncmp(line, "SO", 2))
+	{
+		cub->wall_so = line + 3;
+	}
+	else if(!ft_strncmp(line, "EA", 2))
+	{
+		cub->wall_ea = line + 3;
+	}
+	else if(!ft_strncmp(line, "WE", 2))
+	{
+		cub->wall_we = line + 3;
+	}
+	else if(!ft_strncmp(line, "F", 1))
+	{
+		cub->floor = line + 2;
+	}
+	else if(!ft_strncmp(line, "C", 1))
+	{
+		cub->sky = line + 2;
+	}
+	else
+		ft_strlcpy(cub->map_line[i], line, ft_strlen(line));
+	i++;
 }

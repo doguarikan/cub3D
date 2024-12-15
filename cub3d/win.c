@@ -1,5 +1,5 @@
 #include "cubthreed.h"
-
+/*
 int	create_xpm(t_map *cub)
 {
 	int	x;
@@ -133,4 +133,6 @@ int	main(int argc, char **argv)
 		return (1);
 	return (0);
 }
+*/
+
 */
