@@ -1,5 +1,5 @@
 #include "cubthreed.h"
-
+/*
 int	init_map(t_map *cub)
 {
 	//create_xpm(cub);
@@ -9,7 +9,7 @@ int	init_map(t_map *cub)
     //mlx_loop(cub->mlx_win);
 	return(0);
 }
-
+*/
 int ft_error(char *line)
 {
 	printf("Error %s\n", line);
@@ -61,6 +61,7 @@ int	main(int argc, char **argv)
 	}
 	if(!split_map(cub))
 		return (1);
+	printf("%d\n",cub->index_p);
 	//if (map_checker(cub))
 	//	return (1);
 	//map read and control

@@ -16,6 +16,7 @@ int	read_chars(t_map *cub, char *f_name)
 	fd = open(f_name, O_RDONLY);
 	if (fd == -1)
 	{
+		printf("%s\n", f_name);
 		free(cub->tmp_map);
 		return (1);
 	}
@@ -53,6 +54,7 @@ void	read_map(t_map *cub, char *f_name)
 	cub->tmp_map = malloc(sizeof(char *) * len + 1);
 	if (!cub->tmp_map)
 		return ;
+	printf("hello\n"); // kaldırınca abort alıyor
 	cub->tmp_map[len + 1] = NULL;
 	cub->map_y_line = len;
 }
@@ -61,7 +63,7 @@ void	empty_map(t_map *cub)
 {
 	if (cub->map_y_line == 1)
 	{
-		//ft_printf("Error : empty map or invalid map!\n");
+		printf("Error : empty map or invalid map!\n");
 		exit (0);
 	}
 }
@@ -82,19 +84,24 @@ int split_map(t_map *cub)
 void	split_line(t_map *cub, char* line, int i) //??????!!! sırayı tutalım
 {
 	if(!ft_strncmp(line, "NO", 2))
-		cub->index_no = i;
+		cub->index_no = i + 1;
 	else if(!ft_strncmp(line, "SO", 2))
-		cub->index_so = i;
+		cub->index_so = i + 1;
 	else if(!ft_strncmp(line, "EA", 2))
-		cub->index_ea = i;
+		cub->index_ea = i + 1;
 	else if(!ft_strncmp(line, "WE", 2))
-		cub->index_we = i;
+		cub->index_we = i + 1;
 	else if(!ft_strncmp(line, "F", 1))
-		cub->index_floor = i;
+		cub->index_floor = i + 1;
 	else if(!ft_strncmp(line, "C", 1))
-		cub->index_sky = i;
-	else if(!ft_strchr(line, 'N') || !ft_strchr(line, 'S') || !ft_strchr(line, 'E') || !ft_strchr(line, 'W'))
-		cub->index_p = i; // playerin hangi satrıda olduğunu belirler
-	else
-		ft_strlcpy(cub->map_line[i], line, ft_strlen(line));
+		cub->index_sky = i + 1;
+	else if(!ft_strncmp(line, "R", 1))
+		cub->index_screen = i + 1;
+	else if(line && (ft_strchr(line, 'N') || ft_strchr(line, 'S') || ft_strchr(line, 'E') || ft_strchr(line, 'W')))
+	{
+		cub->index_p = i + 1;
+	}
+	/*else
+		ft_strlcpy(cub->map_line[i], line, ft_strlen(line)); // substr olması laızm seg alıyor
+*/
 }

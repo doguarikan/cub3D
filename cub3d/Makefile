@@ -2,32 +2,36 @@ NAME = cub3D
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
 FRAMES = -framework OpenGL -framework AppKit
-SOURCES =  main.c 
+SOURCES =  main.c map_read.c
 OBJS = $(SOURCES:.c=.o)
 
-MLX = ./mlx/libmlx_Linux.a
+#MLX = ./mlx/libmlx_Linux.a
 LIBFT = ./libft/libft.a
-
+GNL = ./get_next_line/gnl.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(MLX) $(LIBFT) $(GNL) $(PRINTF) 
-	$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT) $(FRAMES)
+$(NAME): $(OBJS)  $(LIBFT) $(GNL) #$(MLX)
+	$(CC) $(FLAGS) -o $(NAME) $(OBJS)  $(GNL) $(LIBFT)  
+#	$(FRAMES) $(MLX)
 
 $(OBJS): $(SOURCES)
-	$(CC) $(FLAGS) -c ${SOURCES}
+	$(CC) $(FLAGS) -c $(SOURCES)
 
-$(MLX):
-	@${MAKE} -C ./mlx
+#$(MLX):
+#	@$(MAKE) -C ./mlx
 
 $(LIBFT):
-	@${MAKE} -C ./libft
+	@$(MAKE) -C ./libft
+	
+$(GNL):
+	@$(MAKE) -C ./get_next_line
 
 clean:
-	rm -f ${OBJS}
-	@${MAKE} clean -C ./mlx
+	rm -f $(OBJS)
+#	@$(MAKE) clean -C ./mlx
 
 fclean: clean
-	rm -f so_long
+	rm -f cub3D
 	
 re:fclean all
