@@ -82,30 +82,19 @@ int split_map(t_map *cub)
 void	split_line(t_map *cub, char* line, int i) //??????!!! sırayı tutalım
 {
 	if(!ft_strncmp(line, "NO", 2))
-	{
-		cub->wall_no = line + 3; // araya biden fazla bosluk olabilir mi 
-	}
+		cub->index_no = i;
 	else if(!ft_strncmp(line, "SO", 2))
-	{
-		cub->wall_so = line + 3;
-	}
+		cub->index_so = i;
 	else if(!ft_strncmp(line, "EA", 2))
-	{
-		cub->wall_ea = line + 3;
-	}
+		cub->index_ea = i;
 	else if(!ft_strncmp(line, "WE", 2))
-	{
-		cub->wall_we = line + 3;
-	}
+		cub->index_we = i;
 	else if(!ft_strncmp(line, "F", 1))
-	{
-		cub->floor = line + 2;
-	}
+		cub->index_floor = i;
 	else if(!ft_strncmp(line, "C", 1))
-	{
-		cub->sky = line + 2;
-	}
+		cub->index_sky = i;
+	else if(!ft_strchr(line, 'N') || !ft_strchr(line, 'S') || !ft_strchr(line, 'E') || !ft_strchr(line, 'W'))
+		cub->index_p = i; // playerin hangi satrıda olduğunu belirler
 	else
 		ft_strlcpy(cub->map_line[i], line, ft_strlen(line));
-	i++;
 }
