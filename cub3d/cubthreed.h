@@ -24,8 +24,8 @@ typedef struct s_map
 	int		index_sky;
 	int		index_floor;
 	int		index_p;
-	int		index_screen;
 	char	**map_line;
+	int		first_len;
 	char	**tmp_map;
 	int		p_x;
 	int		p_y;
@@ -38,11 +38,11 @@ typedef struct s_map
 }				t_map;
 
 
-int	create_xpm(t_map *cub);
-int	safe_exit(t_map *cub);
-int	read_chars(t_map *cub, char *f_name);
-int split_map(t_map *cub);
-int	arg_checker(int argc, char *argv);
+int		create_xpm(t_map *cub);
+int		safe_exit(t_map *cub);
+int		read_chars(t_map *cub, char *f_name);
+int		split_map(t_map *cub);
+int		arg_checker(int argc, char *argv);
 void	read_map(t_map *cub, char *f_name);
 void	empty_map(t_map *cub);
 void	split_line(t_map *cub, char* line, int i);

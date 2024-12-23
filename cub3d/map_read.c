@@ -16,7 +16,6 @@ int	read_chars(t_map *cub, char *f_name)
 	fd = open(f_name, O_RDONLY);
 	if (fd == -1)
 	{
-		printf("%s\n", f_name);
 		free(cub->tmp_map);
 		return (1);
 	}
@@ -50,11 +49,12 @@ void	read_map(t_map *cub, char *f_name)
 			len++;
 	}
 	len++;
+	cub->first_len = len;
 	close(fd);
 	cub->tmp_map = malloc(sizeof(char *) * len + 1);
 	if (!cub->tmp_map)
 		return ;
-	printf("hello\n"); // kaldırınca abort alıyor
+	//printf("hello\n"); // kaldırınca abort alıyor
 	cub->tmp_map[len + 1] = NULL;
 	cub->map_y_line = len;
 }
@@ -81,25 +81,23 @@ int split_map(t_map *cub)
 	return i;
 }
 
-void	split_line(t_map *cub, char* line, int i) //??????!!! sırayı tutalım
+void	split_line(t_map *cub, char* line, int i)
 {
 	if(!ft_strncmp(line, "NO", 2))
-		cub->index_no = i + 1;
+		cub->index_no = i;
 	else if(!ft_strncmp(line, "SO", 2))
-		cub->index_so = i + 1;
+		cub->index_so = i;
 	else if(!ft_strncmp(line, "EA", 2))
-		cub->index_ea = i + 1;
+		cub->index_ea = i;
 	else if(!ft_strncmp(line, "WE", 2))
-		cub->index_we = i + 1;
+		cub->index_we = i;
 	else if(!ft_strncmp(line, "F", 1))
-		cub->index_floor = i + 1;
+		cub->index_floor = i;
 	else if(!ft_strncmp(line, "C", 1))
-		cub->index_sky = i + 1;
-	else if(!ft_strncmp(line, "R", 1))
-		cub->index_screen = i + 1;
+		cub->index_sky = i;
 	else if(line && (ft_strchr(line, 'N') || ft_strchr(line, 'S') || ft_strchr(line, 'E') || ft_strchr(line, 'W')))
 	{
-		cub->index_p = i + 1;
+		cub->index_p = i;
 	}
 	/*else
 		ft_strlcpy(cub->map_line[i], line, ft_strlen(line)); // substr olması laızm seg alıyor

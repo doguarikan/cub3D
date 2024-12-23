@@ -61,11 +61,10 @@ int	main(int argc, char **argv)
 	}
 	if(!split_map(cub))
 		return (1);
+	if(map_check(cub))
+		return (1);
 	printf("%d\n",cub->index_p);
-	//if (map_checker(cub))
-	//	return (1);
-	//map read and control
-
+	
 	//init map
 	//init_map(cub);
 
