@@ -3,19 +3,20 @@
 
 int map_check(t_map *cub)
 {
-    map_line_fill(cub));
-    {
-        ft_error("Invalid map!");
-        //mapler freelencek
-    }
+    map_line_fill(cub);
     if(cub->index_p < cub->index_no || cub->index_p < cub->index_so || cub->index_p < cub->index_ea ||\
         cub->index_p < cub->index_we || cub->index_p < cub->index_floor || cub->index_p < cub->index_sky)
     {
+        cub_free(cub);
         ft_error("Invalid map!");
         return (1);
     }
     if (locate_p(cub))
+    {
+        cub_free(cub);
+        ft_error("Invalid map! more than one player");
         return (1); // hata birden fazla player var
+    }
     return (0);
 }
 
@@ -31,8 +32,8 @@ int    map_line_fill(t_map *cub)
     j = 0;
     while((cub->first_len - index_tot) > j)
     {
-        if (i != cub->index_no || i != cub->index_so || i != cub->index_ea || i != cub->index_we ||\
-            i != cub->index_sky || i != cub->index_floor)
+        if (i != cub->index_no && i != cub->index_so && i != cub->index_ea && i != cub->index_we &&\
+            i != cub->index_sky && i != cub->index_floor)
         {
             cub->map_line[j] = ft_strdup(cub->tmp_map[i]);
             j++;
@@ -42,7 +43,7 @@ int    map_line_fill(t_map *cub)
     return (0);
 }
 
-char	chr_find(const char *str)
+char	chr_find(const char *str, t_map *cub)
 {
 	int i;
 
@@ -50,11 +51,12 @@ char	chr_find(const char *str)
 	while(str[i])
 	{
 		if (str[i] == 'S' || str[i] == 'W' ||\
-			str[i] == 'N' str[i] == 'E')
+			str[i] == 'N' || str[i] == 'E')
 		{
+            cub->p_direction = str[i];
 			return (i);
 		}
-		i++
+		i++;
 	}
 	return (0);
 }
@@ -63,21 +65,16 @@ int locate_p(t_map *cub)
 {
     int count;
     int i;
-    int j;
 
-    j = 0;
     i = 0;
     count = 0;
     while(cub->map_line[i])
     {
-        while (cub->map_line[i])
+		if(chr_find(cub->map_line[i], cub))
 		{
-			if(chr_find(cub->map_line[i]))
-			{
-				count++;
-				cub->p_y = i;
-				cub->p_x = chr_find(cub->map_line[i]);
-			}
+			count++;
+			cub->p_y = i;
+			cub->p_x = chr_find(cub->map_line[i], cub);
 		}
 		i++;
     }

@@ -63,8 +63,9 @@ int	main(int argc, char **argv)
 		return (1);
 	if(map_check(cub))
 		return (1);
-	printf("%d\n",cub->index_p);
+	control_wall(cub);
 	
+
 	//init map
 	//init_map(cub);
 

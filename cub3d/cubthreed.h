@@ -1,8 +1,9 @@
 #ifndef CUBTHREED_H
 # define CUBTHREED_H
 
-# include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
+# include "libft/libft.h"
+
 # include "mlx/mlx.h"
 # include <unistd.h>
 # include <stdlib.h>
@@ -24,9 +25,10 @@ typedef struct s_map
 	int		index_sky;
 	int		index_floor;
 	int		index_p;
-	char	**map_line;
 	int		first_len;
+	char	**map_line;
 	char	**tmp_map;
+	char	p_direction;
 	int		p_x;
 	int		p_y;
 	int		player_count;
@@ -46,5 +48,14 @@ int		arg_checker(int argc, char *argv);
 void	read_map(t_map *cub, char *f_name);
 void	empty_map(t_map *cub);
 void	split_line(t_map *cub, char* line, int i);
+int control_wall(t_map *cub);
+int is_valid(t_map *cub, int x, int y);
+int	check_surround(t_map *cub, int x, int y);
+void	cub_free(t_map *cub);
+int map_check(t_map *cub);
+int    map_line_fill(t_map *cub);
+char	chr_find(const char *str, t_map *cub);
+int locate_p(t_map *cub);
+int ft_error(char *line);
 
 #endif

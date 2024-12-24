@@ -1,8 +1,8 @@
 NAME = cub3D
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 FRAMES = -framework OpenGL -framework AppKit
-SOURCES =  main.c map_read.c
+SOURCES =  main.c map_read.c map_utils.c flood_fill.c
 OBJS = $(SOURCES:.c=.o)
 
 #MLX = ./mlx/libmlx_Linux.a
@@ -12,7 +12,7 @@ GNL = ./get_next_line/gnl.a
 all: $(NAME)
 
 $(NAME): $(OBJS)  $(LIBFT) $(GNL) #$(MLX)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJS)  $(GNL) $(LIBFT)  
+	$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(GNL) $(LIBFT)  
 #	$(FRAMES) $(MLX)
 
 $(OBJS): $(SOURCES)

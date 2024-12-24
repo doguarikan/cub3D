@@ -45,17 +45,18 @@ void	read_map(t_map *cub, char *f_name)
 	len = 0;
 	while (read(fd, &c, 1))
 	{
-		if (c == '\n')
+		if (c == '\n' || c == '\0')
 			len++;
 	}
 	len++;
-	cub->first_len = len;
+	cub->first_len = len - 1;
 	close(fd);
-	cub->tmp_map = malloc(sizeof(char *) * len + 1);
+	printf("%d\n",len);
+	cub->tmp_map = malloc(sizeof(char *) * (len + 1));
 	if (!cub->tmp_map)
 		return ;
-	//printf("hello\n"); // kaldırınca abort alıyor
-	cub->tmp_map[len + 1] = NULL;
+	//printf("hello\n");
+	cub->tmp_map[len] = NULL;
 	cub->map_y_line = len;
 }
 
@@ -63,7 +64,8 @@ void	empty_map(t_map *cub)
 {
 	if (cub->map_y_line == 1)
 	{
-		printf("Error : empty map or invalid map!\n");
+		free(cub);
+		ft_error("empty map or invalid map!");
 		exit (0);
 	}
 }
