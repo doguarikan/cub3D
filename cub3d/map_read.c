@@ -26,6 +26,8 @@ int	read_chars(t_map *cub, char *f_name)
 		i++;
 		cub->tmp_map[i] = get_next_line(fd);
 	}
+	if (i < cub->map_y_line) // Eğer beklenen satır sayısı dolmamışsa
+        cub->tmp_map[i] = NULL; //fvg
 	close(fd);
 	return (0);
 }
@@ -45,17 +47,16 @@ void	read_map(t_map *cub, char *f_name)
 	len = 0;
 	while (read(fd, &c, 1))
 	{
-		if (c == '\n' || c == '\0')
+		if (c == '\n')
 			len++;
 	}
 	len++;
 	cub->first_len = len - 1;
 	close(fd);
-	printf("%d\n",len);
 	cub->tmp_map = malloc(sizeof(char *) * (len + 1));
 	if (!cub->tmp_map)
 		return ;
-	//printf("hello\n");
+	printf("%d\n",len);
 	cub->tmp_map[len] = NULL;
 	cub->map_y_line = len;
 }
