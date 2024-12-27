@@ -29,9 +29,14 @@ $(GNL):
 
 clean:
 	rm -f $(OBJS)
+	@$(MAKE) clean -C ./libft
+	@$(MAKE) clean -C ./get_next_line
 #	@$(MAKE) clean -C ./mlx
 
 fclean: clean
-	rm -f cub3D
+	rm -f $(NAME)
+	@$(MAKE) fclean -C ./libft
+	@$(MAKE) fclean -C ./get_next_line
+#	@$(MAKE) fclean -C ./mlx
 	
 re:fclean all
