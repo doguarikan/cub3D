@@ -50,6 +50,7 @@ int	map_read_check(t_map *cub, char *f_name)
 int	main(int argc, char **argv)
 {
 	t_map	*cub;
+	t_mlx	*minx;
 
 	cub = (t_map *)malloc(sizeof(t_map));
 	if (!cub)
@@ -63,7 +64,10 @@ int	main(int argc, char **argv)
 		return (1);
 	if(map_check(cub))
 		return (1);
-	control_wall(cub);
+	control_wall(cub); // burda seg alıyor
+	//minx = (t_map *)malloc(sizeof(t_map));
+	//if (!minx)
+	//	return (1);
 	
 
 	//init map

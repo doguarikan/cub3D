@@ -12,12 +12,6 @@
 
 typedef struct s_map
 {
-	void	*floor;
-	void	*sky;
-	void	*wall_ea;
-	void	*wall_no;
-	void	*wall_so;
-	void	*wall_we;
 	int		index_ea;
 	int		index_no;
 	int		index_so;
@@ -35,10 +29,20 @@ typedef struct s_map
 	int		map_x_line;
 	int		map_y_line;
 	char	*f_name;
-	void	*mlx;
-	void	*mlx_win;
+	struct  t_mlx *m;
 }				t_map;
 
+typedef struct s_mlx
+{
+	void	*floor;
+	void	*sky;
+	void	*wall_ea;
+	void	*wall_no;
+	void	*wall_so;
+	void	*wall_we;
+	void	*mlx;
+	void	*mlx_win;
+}				t_mlx;
 
 int		create_xpm(t_map *cub);
 int		safe_exit(t_map *cub);

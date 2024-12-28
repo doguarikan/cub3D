@@ -33,7 +33,6 @@ int is_valid(t_map *cub, int x, int y)
 		cub->map_line[y - 1][x] = cub->p_direction;
 		is_valid(cub, x, y - 1);
 	}
-	printf("d\n");
 	return (1);
 }
 
@@ -41,16 +40,24 @@ int	check_surround(t_map *cub, int x, int y)
 {
 	if (cub->map_line[y][x + 1] != '0' && cub->map_line[y][x + 1] != '1' &&
 		cub->map_line[y][x + 1] != cub->p_direction)
+	{
 		return (0);
+	}
 	if (cub->map_line[y][x - 1] != '0' && cub->map_line[y][x - 1] != '1' &&
 		cub->map_line[y][x - 1] != cub->p_direction)
+	{
 		return (0);
+	}
 	if (cub->map_line[y + 1][x] != '0' && cub->map_line[y + 1][x] != '1' &&
 		cub->map_line[y + 1][x] != cub->p_direction)
+	{
 		return (0);
+	}
 	if (cub->map_line[y - 1][x] != '0' && cub->map_line[y - 1][x] != '1' &&
 		cub->map_line[y - 1][x] != cub->p_direction)
+	{
 		return (0);
+	}
 	return (1);
 }
 

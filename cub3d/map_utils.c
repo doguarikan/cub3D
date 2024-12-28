@@ -8,7 +8,7 @@ int map_check(t_map *cub)
         cub->index_p < cub->index_we || cub->index_p < cub->index_floor || cub->index_p < cub->index_sky)
     {
         cub_free(cub);
-        ft_error("Invalid map!");
+        ft_error("Invalid map, map location fail!");
         return (1);
     }
     if (locate_p(cub))
@@ -26,20 +26,22 @@ int    map_line_fill(t_map *cub)
     int i;
     int j;
 
-    index_tot = 6; // r ne = index_screen
+    index_tot = 6;
     cub->map_line = malloc(sizeof(char *) * (cub->first_len) + 1 - index_tot);
     i = 0;
     j = 0;
-    while((cub->first_len - index_tot) > j)
+    while((cub->first_len - index_tot) >= j)
     {
         if (i != cub->index_no && i != cub->index_so && i != cub->index_ea && i != cub->index_we &&\
             i != cub->index_sky && i != cub->index_floor)
         {
-            cub->map_line[j] = ft_strdup(cub->tmp_map[i]);
+            if(cub->tmp_map[i])
+                cub->map_line[j] = ft_strdup(cub->tmp_map[i]);
             j++;
         }
         i++;
     }
+    cub->map_line[j] = NULL;
     return (0);
 }
 
@@ -73,7 +75,7 @@ int locate_p(t_map *cub)
 		if(chr_find(cub->map_line[i], cub))
 		{
 			count++;
-			cub->p_y = i;
+			cub->p_y = i ;
 			cub->p_x = chr_find(cub->map_line[i], cub);
 		}
 		i++;
