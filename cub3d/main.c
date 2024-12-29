@@ -26,7 +26,7 @@ int	arg_checker(int argc, char *argv)
 		ft_error("Invalid argument count!");
 		return (1);
 	}
-	if (argv[len - 1] != 'b' && argv[len - 2] != 'u' && \
+	if (argv[len - 1] != 'b' && argv[len - 2] != 'u' && \ // dosya uzantısı .cub ile mi bitiyor kontolü
 			argv[len - 3] != 'c' && argv[len - 4] != '.')
 	{
 		ft_error("File extension must be .cub!\n");
@@ -38,7 +38,7 @@ int	arg_checker(int argc, char *argv)
 int	map_read_check(t_map *cub, char *f_name)
 {
 	read_chars(cub, f_name);
-	if (!(cub->tmp_map))
+	if (!(cub->tmp_map)) // map okuma işleminden sonra okunabilmiş mi kontrolü
 	{
 		free(cub->tmp_map);
 		ft_error("Cannot read the map!");
@@ -64,7 +64,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if(map_check(cub))
 		return (1);
-	control_wall(cub); // burda seg alıyor
+	control_wall(cub);
 	//minx = (t_map *)malloc(sizeof(t_map));
 	//if (!minx)
 	//	return (1);

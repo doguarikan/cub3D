@@ -6,7 +6,7 @@ int map_check(t_map *cub)
     map_line_fill(cub);
     if(cub->index_p < cub->index_no || cub->index_p < cub->index_so || cub->index_p < cub->index_ea ||\
         cub->index_p < cub->index_we || cub->index_p < cub->index_floor || cub->index_p < cub->index_sky)
-    {
+    { // map en altta olması gerektiği için player satır indexi ve xpm rgb indekslerini karşılaştırp ona göre hata verir
         cub_free(cub);
         ft_error("Invalid map, map location fail!");
         return (1);
@@ -27,13 +27,13 @@ int    map_line_fill(t_map *cub)
     int j;
 
     index_tot = 6;
-    cub->map_line = malloc(sizeof(char *) * (cub->first_len) + 1 - index_tot);
+    cub->map_line = malloc(sizeof(char *) * (cub->first_len) + 1 - index_tot); // xpm ve rgb dısşındaki satır sayısı kadar yer aç
     i = 0;
     j = 0;
     while((cub->first_len - index_tot) >= j)
     {
         if (i != cub->index_no && i != cub->index_so && i != cub->index_ea && i != cub->index_we &&\
-            i != cub->index_sky && i != cub->index_floor)
+            i != cub->index_sky && i != cub->index_floor) // xpm ve rgb dışındaki indexleri döner ve boş satırları da map_line içine atar
         {
             if(cub->tmp_map[i])
                 cub->map_line[j] = ft_strdup(cub->tmp_map[i]);

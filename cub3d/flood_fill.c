@@ -7,13 +7,13 @@ int control_wall(t_map *cub)
 
 int is_valid(t_map *cub, int x, int y)
 {
-    if (!check_surround(cub, x, y))
+    if (!check_surround(cub, x, y)) // anlık yerin sag sol ust altında 1 0 ve player yonu disinda bir şey var mı ona bakar
 	{
 		cub_free(cub);
         ft_error("Invalid map!");
 		exit(1);
 	}
-	if (cub->map_line[y][x + 1] == '0')
+	if (cub->map_line[y][x + 1] == '0') // floodfill ile sag sol alt ust gidere recursive ilerler
 	{
 		cub->map_line[y][x + 1] = cub->p_direction;
 		is_valid(cub, x + 1, y);
@@ -36,7 +36,7 @@ int is_valid(t_map *cub, int x, int y)
 	return (1);
 }
 
-int	check_surround(t_map *cub, int x, int y)
+int	check_surround(t_map *cub, int x, int y) // sol sag ust alt kontolu yapar
 {
 	if (cub->map_line[y][x + 1] != '0' && cub->map_line[y][x + 1] != '1' &&
 		cub->map_line[y][x + 1] != cub->p_direction)

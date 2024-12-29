@@ -8,7 +8,7 @@ int	read_chars(t_map *cub, char *f_name)
 
 	read_map(cub, f_name);
 	empty_map(cub);
-	if (!(cub->tmp_map) || cub->map_y_line <= 0)
+	if (!(cub->tmp_map))
 	{
 		cub->tmp_map = NULL;
 		return (1);
@@ -53,8 +53,8 @@ void	read_map(t_map *cub, char *f_name)
 	len++;
 	cub->first_len = len - 1;
 	close(fd);
-	cub->tmp_map = malloc(sizeof(char *) * (len + 1));
-	if (!cub->tmp_map)
+	cub->tmp_map = malloc(sizeof(char *) * (len + 1)); // dosyanın tamamını açıp okur ve kaç satır varsa double arrayin ilk düzlem buyukuluğunu bulur
+	if (!cub->tmp_map)								  // sonuna null atar ve dosya satır sayısını tutar
 		return ;
 	cub->tmp_map[len] = NULL;
 	cub->map_y_line = len;
@@ -62,7 +62,7 @@ void	read_map(t_map *cub, char *f_name)
 
 void	empty_map(t_map *cub)
 {
-	if (cub->map_y_line == 1)
+	if (cub->map_y_line == 1) // map 1 satırsa her turlu gecersiz
 	{
 		free(cub);
 		ft_error("Empty map or invalid map!");
@@ -83,7 +83,7 @@ int split_map(t_map *cub)
 	return i;
 }
 
-void	split_line(t_map *cub, char* line, int i)
+void	split_line(t_map *cub, char* line, int i) // xpm ve karakterin hangi satırlarda olduğunu kayıt altına alır
 {
 	if(!ft_strncmp(line, "NO", 2))
 		cub->index_no = i;
@@ -101,7 +101,4 @@ void	split_line(t_map *cub, char* line, int i)
 	{
 		cub->index_p = i;
 	}
-	/*else
-		ft_strlcpy(cub->map_line[i], line, ft_strlen(line)); // substr olması laızm seg alıyor
-*/
 }
