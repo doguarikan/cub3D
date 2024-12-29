@@ -1,21 +1,24 @@
 #include "cubthreed.h"
-/*
+
 int	create_xpm(t_map *cub)
 {
 	int	x;
 	int	y;
-//HATALI
+
 	cub->wall_ea = mlx_xpm_file_to_image(cub->mlx, \
-					//MAPTEN OKICAZ DOSYADAN DEĞİL"./textures/wall_ea.xpm", &x, &y);
+					(cub->tex_ea), 64, 64);
 	cub->wall_no = mlx_xpm_file_to_image(cub->mlx, \
-					"./textures/wall_no.xpm", &x, &y);
+					(cub->tex_no), 64, 64);
 	cub->wall_so = mlx_xpm_file_to_image(cub->mlx, \
-					"./textures/wall_so.xpm", &x, &y);
+					(cub->tex_so), 64, 64);
 	cub->wall_we = mlx_xpm_file_to_image(cub->mlx, \
-					"./textures/wall_we.xpm", &x, &y);
-	if (!cub->floor || !cub->wall_no || !cub->wall_so || \
-		!cub->wall_we || !cub->wall_so || !cub->sky)
-		safe_exit(cub); // eksik
+					(cub->tex_we), 64, 64);
+	if (!cub->wall_no || !cub->wall_so || \
+		!cub->wall_we || !cub->wall_so)
+	{
+		ft_error("XPM error.");
+		safe_exit(cub);
+	}
 	return (0);
 }
 
