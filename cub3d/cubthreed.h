@@ -20,6 +20,12 @@ typedef struct s_map
 	int		index_floor;
 	int		index_p;
 	int		first_len;
+	char	**sky_char;
+	char	**floor_char;
+	char	*tex_ea;
+	char	*tex_no;
+	char	*tex_so;
+	char	*tex_we;
 	char	**map_line;
 	char	**tmp_map;
 	char	p_direction;
@@ -29,20 +35,14 @@ typedef struct s_map
 	int		map_x_line;
 	int		map_y_line;
 	char	*f_name;
-	struct  t_mlx *m;
-}				t_map;
-
-typedef struct s_mlx
-{
-	void	*floor;
-	void	*sky;
 	void	*wall_ea;
 	void	*wall_no;
 	void	*wall_so;
 	void	*wall_we;
 	void	*mlx;
 	void	*mlx_win;
-}				t_mlx;
+
+}				t_map;
 
 int		create_xpm(t_map *cub);
 int		safe_exit(t_map *cub);
@@ -52,14 +52,18 @@ int		arg_checker(int argc, char *argv);
 void	read_map(t_map *cub, char *f_name);
 void	empty_map(t_map *cub);
 void	split_line(t_map *cub, char* line, int i);
-int control_wall(t_map *cub);
-int is_valid(t_map *cub, int x, int y);
-int	check_surround(t_map *cub, int x, int y);
+int		control_wall(t_map *cub);
+int		is_valid(t_map *cub, int x, int y);
+int		check_surround(t_map *cub, int x, int y);
 void	cub_free(t_map *cub);
-int map_check(t_map *cub);
-int    map_line_fill(t_map *cub);
+int		map_check(t_map *cub);
+int		map_line_fill(t_map *cub);
 char	chr_find(const char *str, t_map *cub);
-int locate_p(t_map *cub);
-int ft_error(char *line);
+int		locate_p(t_map *cub);
+int		ft_error(char *line);
+int		handle_color(t_map *cub);
+int		rgb_check(char a);
+void	set_color(t_map* cub);
+void	handle_texture(t_map* cub);
 
 #endif
