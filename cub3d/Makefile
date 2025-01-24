@@ -2,7 +2,7 @@ NAME = cub3D
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 FRAMES = -framework OpenGL -framework AppKit
-SOURCES =  main.c map_read.c map_utils.c flood_fill.c
+SOURCES =  main.c flood_fill.c map_init.c map_read.c map_utils.c 
 OBJS = $(SOURCES:.c=.o)
 
 #MLX = ./mlx/libmlx_Linux.a

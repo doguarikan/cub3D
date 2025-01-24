@@ -75,12 +75,36 @@ int split_map(t_map *cub)
 	int	i;
 
 	i = 0;
+	id_set(cub);
 	while(cub->tmp_map[i])
 	{
 		split_line(cub, cub->tmp_map[i], i);
 		i++;
 	}
+	if(id_check(cub))
+	{
+		ft_error("Missing identifier!");
+		return (0);
+	}
 	return i;
+}
+
+void	id_set(t_map *cub)
+{
+	cub->index_ea = -1;
+	cub->index_so = -1;
+	cub->index_no = -1;
+	cub->index_we = -1;
+	cub->index_floor = -1;
+	cub->index_sky = -1;
+}
+
+int	id_check(t_map *cub)
+{
+	if(cub->index_ea == -1 || cub->index_so == -1 || cub->index_no == -1 
+			|| cub->index_we == -1 || cub->index_floor == -1 || cub->index_sky == -1)
+			return (1);
+	return (0);
 }
 
 void	split_line(t_map *cub, char* line, int i) // xpm ve karakterin hangi satırlarda olduğunu kayıt altına alır

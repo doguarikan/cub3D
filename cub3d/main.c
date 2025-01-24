@@ -10,9 +10,9 @@ int	init_map(t_map *cub)
 	return(0);
 }
 */
-int ft_error(char *line)
+int ft_error(char *line)// int mi voidmi
 {
-	printf("Error %s\n", line);
+	printf("Error\n%s\n", line);
 	return (1); // 1 mi 0 mı?
 }
 
@@ -26,7 +26,7 @@ int	arg_checker(int argc, char *argv)
 		ft_error("Invalid argument count!");
 		return (1);
 	}
-	if (argv[len - 1] != 'b' && argv[len - 2] != 'u' && \ // dosya uzantısı .cub ile mi bitiyor kontolü
+	if (argv[len - 1] != 'b' && argv[len - 2] != 'u' &&  // dosya uzantısı .cub ile mi bitiyor kontolü
 			argv[len - 3] != 'c' && argv[len - 4] != '.')
 	{
 		ft_error("File extension must be .cub!\n");
@@ -50,7 +50,7 @@ int	map_read_check(t_map *cub, char *f_name)
 int	main(int argc, char **argv)
 {
 	t_map	*cub;
-	t_mlx	*minx;
+	//t_mlx	*minx;
 
 	cub = (t_map *)malloc(sizeof(t_map));
 	if (!cub)
@@ -61,10 +61,23 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	if(!split_map(cub))
+	{
+		free(cub);
 		return (1);
+	}
 	if(map_check(cub))
 		return (1);
 	control_wall(cub);
+	if(!handle_color(cub))
+	{
+		ft_error("Color error");
+		cub_free(cub);
+		return (1);
+	}
+	handle_texture(cub);
+	printf("%d\n",cub->col_floor[0]);
+	printf("%d\n",cub->col_floor[1]);
+	printf("%d\n",cub->col_floor[2]);
 	//minx = (t_map *)malloc(sizeof(t_map));
 	//if (!minx)
 	//	return (1);

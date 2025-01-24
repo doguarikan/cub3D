@@ -3,8 +3,7 @@
 
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
-
-# include "mlx/mlx.h"
+//# include "mlx/mlx.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -26,6 +25,8 @@ typedef struct s_map
 	char	*tex_no;
 	char	*tex_so;
 	char	*tex_we;
+	int		*col_floor;
+	int		*col_sky;
 	char	**map_line;
 	char	**tmp_map;
 	char	p_direction;
@@ -63,7 +64,11 @@ int		locate_p(t_map *cub);
 int		ft_error(char *line);
 int		handle_color(t_map *cub);
 int		rgb_check(char a);
-void	set_color(t_map* cub);
+int		set_color(t_map* cub);
 void	handle_texture(t_map* cub);
-
+int		id_check(t_map *cub);
+void	id_set(t_map *cub);
+void	color_atoi(t_map *cub);
+void	color_checker(t_map *cub);
+int		color_range(t_map *cub);
 #endif
