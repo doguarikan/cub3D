@@ -107,10 +107,15 @@ int set_color(t_map* cub)
 
 void handle_texture(t_map* cub)// dosya var mı kontrolü eklencek/ open close
 {
-	cub->tex_ea = ft_strtrim((cub->tmp_map[cub->index_ea] + 2)," \n");
-	cub->tex_no = ft_strtrim((cub->tmp_map[cub->index_no] + 2)," \n");
-	cub->tex_so = ft_strtrim((cub->tmp_map[cub->index_so] + 2)," \n");
-	cub->tex_we = ft_strtrim((cub->tmp_map[cub->index_we] + 2)," \n");
+	cub->tex_ea = ft_strtrim((cub->tmp_map[cub->index_ea] + 2)," ");
+	cub->tex_no = ft_strtrim((cub->tmp_map[cub->index_no] + 2)," ");
+	cub->tex_so = ft_strtrim((cub->tmp_map[cub->index_so] + 2)," ");
+	cub->tex_we = ft_strtrim((cub->tmp_map[cub->index_we] + 2)," ");
+	
+	cub->tex_ea = ft_strtrim((cub->tex_ea),"\n");
+	cub->tex_no = ft_strtrim((cub->tex_no),"\n");
+	cub->tex_so = ft_strtrim((cub->tex_so),"\n");
+	cub->tex_we = ft_strtrim((cub->tex_we),"\n");
 }
 
 

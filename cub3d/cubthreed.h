@@ -3,7 +3,7 @@
 
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
-//# include "mlx/mlx.h"
+# include "mlx/mlx.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -49,7 +49,7 @@ int		create_xpm(t_map *cub);
 int		safe_exit(t_map *cub);
 int		read_chars(t_map *cub, char *f_name);
 int		split_map(t_map *cub);
-int		arg_checker(int argc, char *argv);
+int		arg_checker(int argc, char **argv);
 void	read_map(t_map *cub, char *f_name);
 void	empty_map(t_map *cub);
 void	split_line(t_map *cub, char* line, int i);
@@ -71,4 +71,5 @@ void	id_set(t_map *cub);
 void	color_atoi(t_map *cub);
 void	color_checker(t_map *cub);
 int		color_range(t_map *cub);
+int		create_xpm(t_map *cub);
 #endif

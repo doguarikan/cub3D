@@ -4,20 +4,19 @@ int	create_xpm(t_map *cub)
 {
 	int	x;
 	int	y;
+	int		img_width;
+	int		img_height;
 
-	cub->wall_ea = mlx_xpm_file_to_image(cub->mlx, \
-					(cub->tex_ea), 64, 64);
-	cub->wall_no = mlx_xpm_file_to_image(cub->mlx, \
-					(cub->tex_no), 64, 64);
-	cub->wall_so = mlx_xpm_file_to_image(cub->mlx, \
-					(cub->tex_so), 64, 64);
-	cub->wall_we = mlx_xpm_file_to_image(cub->mlx, \
-					(cub->tex_we), 64, 64);
-	if (!cub->wall_no || !cub->wall_so || \
-		!cub->wall_we || !cub->wall_so)
+	img_width = 32;
+	img_height = 32;
+	cub->wall_ea = mlx_xpm_file_to_image(cub->mlx, cub->tex_ea, &img_width, &img_height);
+	cub->wall_no = mlx_xpm_file_to_image(cub->mlx, cub->tex_no, &img_width, &img_height);
+	cub->wall_so = mlx_xpm_file_to_image(cub->mlx, cub->tex_so, &img_width, &img_height);
+	cub->wall_we = mlx_xpm_file_to_image(cub->mlx, cub->tex_we, &img_width, &img_height);
+	if (!cub->wall_no || !cub->wall_so || !cub->wall_we || !cub->wall_so)
 	{
 		ft_error("XPM error.");
-		safe_exit(cub);
+		//safe_exit(cub); burda hata falan kotrolu lazın
 	}
 	return (0);
 }
@@ -29,8 +28,6 @@ int	safe_exit(t_map *cub)//eksik
 	mlx_destroy_image(cub->mlx, cub->wall_we);
 	mlx_destroy_image(cub->mlx, cub->wall_no);
 	mlx_clear_window(cub->mlx, cub->mlx_win);
-	free(cub);
-	exit(EXIT_FAILURE);
 	return (0);
 }
 
