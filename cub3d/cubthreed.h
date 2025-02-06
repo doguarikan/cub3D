@@ -149,7 +149,6 @@ void	split_line(t_map *cub, char* line, int i);
 int		control_wall(t_map *cub);
 int		is_valid(t_map *cub, int x, int y);
 int		check_surround(t_map *cub, int x, int y);
-void	cub_free(t_map *cub);
 int		map_check(t_map *cub);
 int		map_line_fill(t_map *cub);
 char	chr_find(const char *str, t_map *cub);
@@ -187,5 +186,8 @@ void	set_walls(t_map *cub);
 double	calc_dis(t_map *cub);
 void	calc_wall(t_map *cub);
 void	map_liner(t_map *cub, int x);
+void	cub_free(t_map *cub);
 void	ft_free_array(char **arr);
+void	ft_free_struct(t_map *cub);
+void	ft_free_color(t_map *cub);
 #endif

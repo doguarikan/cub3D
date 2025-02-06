@@ -219,10 +219,3 @@ void handle_texture(t_map* cub)// dosya var mı kontrolü eklencek/ open close
 	free(so);
 	free(we);
 }
-
-void ft_free_color(t_map *cub)
-{
-	ft_free_array(cub->floor_char);
-	ft_free_array(cub->sky_char);
-	cub_free(cub);
-}

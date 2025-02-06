@@ -64,6 +64,7 @@ void	empty_map(t_map *cub)
 {
 	if (cub->map_y_line == 1) // map 1 satırsa her turlu gecersiz
 	{
+		ft_free_array(cub->tmp_map);
 		free(cub);
 		ft_error("Empty map or invalid map!");
 		exit (0);

@@ -37,13 +37,6 @@ int	map_read_check(t_map *cub, char *f_name)
 	return (0);
 }
 
-void ft_free_struct(t_map *cub)
-{
-	free(cub->key);
-	free(cub->player);
-	free(cub->raycast);
-}
-
 int	main(int argc, char **argv)
 {
 	t_map	*cub;

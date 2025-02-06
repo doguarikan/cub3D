@@ -60,12 +60,3 @@ int	check_surround(t_map *cub, int x, int y) // sol sag ust alt kontolu yapar
 	}
 	return (1);
 }
-
-void	cub_free(t_map *cub)
-{
-	ft_free_array(cub->tmp_map);
-	ft_free_array(cub->map_line);
-	ft_free_array(cub->map_game);
-	ft_free_struct(cub);
-	free(cub);
-}

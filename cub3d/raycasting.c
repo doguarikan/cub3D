@@ -60,16 +60,3 @@ void	dda(t_map *cub)
 			cub->raycast->hit = 1;
 	}
 }
-
-void	ft_free_array(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
