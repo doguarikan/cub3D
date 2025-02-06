@@ -43,6 +43,10 @@ void ft_free_parse(t_map *cub)
 	ft_free_array(cub->map_game);
 	ft_free_array(cub->floor_char);
 	ft_free_array(cub->sky_char); // !?! int arrayleri freelemek lazım
+	free(cub->tex_ea);
+	free(cub->tex_so);
+	free(cub->tex_no);
+	free(cub->tex_we);
 	ft_free_struct(cub);
 	free(cub);
 }
