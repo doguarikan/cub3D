@@ -118,6 +118,7 @@ int set_color(t_map* cub)
 		ft_free_array(cub->sky_char);
 		return (1);
 	}
+	free(tmp);
 	color_checker(cub);
 	return (0);
 }
