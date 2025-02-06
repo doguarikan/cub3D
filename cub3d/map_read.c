@@ -16,7 +16,7 @@ int	read_chars(t_map *cub, char *f_name)
 	fd = open(f_name, O_RDONLY);
 	if (fd == -1)
 	{
-		free(cub->tmp_map);
+		free(cub->tmp_map); // !?! fd -1 ise zaten tmp_map yer açılmadı ama freelenmeye calısıyor
 		return (1);
 	}
 	i = 0;

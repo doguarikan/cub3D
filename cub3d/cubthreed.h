@@ -8,6 +8,74 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <math.h>
+
+
+# ifndef SCREENHEIGHT
+#  define SCREENHEIGHT 750
+# endif
+
+# ifndef SCREENWIDTH
+#  define SCREENWIDTH 1200
+# endif
+
+# ifndef TILE
+#  define TILE 64
+# endif
+
+typedef struct s_keycode
+{
+	int		w;
+	int		a;
+	int		s;
+	int		d;
+	int		left;
+	int		right;
+}				t_keycode;
+
+typedef struct s_player
+{
+	double		x;
+	double		y;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
+}				t_player;
+
+typedef struct s_raycast
+{
+	double		camera_x;
+	double		raydir_x;
+	double		raydir_y;
+	double		sidedist_x;
+	double		sidedist_y;
+	double		deltadist_x;
+	double		deltadist_y;
+	int			step_x;
+	int			step_y;
+	int			side1;
+	int			hit;
+
+	int			tex_x;
+	int			tex_y;
+
+	double		perp_dist;
+	int			height;
+	int			start_y;
+	int			end_y;
+}				t_raycast;
+
+typedef struct s_textures
+{
+	void	*img;
+	int		*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+	int		w;
+	int		h;
+}				t_textures;
 
 typedef struct s_map
 {
@@ -28,22 +96,47 @@ typedef struct s_map
 	int		*col_floor;
 	int		*col_sky;
 	char	**map_line;
+	char	**map_game;
 	char	**tmp_map;
-	char	p_direction;
-	int		p_x;
-	int		p_y;
 	int		player_count;
 	int		map_x_line;
 	int		map_y_line;
 	char	*f_name;
-	void	*wall_ea;
-	void	*wall_no;
-	void	*wall_so;
-	void	*wall_we;
-	void	*mlx;
-	void	*mlx_win;
 
+
+	t_keycode	*key;
+	t_player	*player;
+	t_raycast	*raycast;
+	t_textures	*walls[4];
+
+	void		*mlx;
+	void		*win;
+
+	int			floor_texture;
+	int			ceiling_texture;
+	char		*floor;
+	char		*ceiling;
+
+	void		*img_ptr;
+	int			pixel_bits;
+	int			line_bytes;
+	int			endian;
+	int			*mlx_data;
+
+	char		**map;
+	char		**copy_map;
+	char		*mapname;
+
+	int			playercount;
+	char		playertype;
+	int			loc_px;
+	int			loc_py;
+	int			row;
+	int			col;
+	
 }				t_map;
+
+
 
 int		create_xpm(t_map *cub);
 int		safe_exit(t_map *cub);
@@ -72,4 +165,27 @@ void	color_atoi(t_map *cub);
 void	color_checker(t_map *cub);
 int		color_range(t_map *cub);
 int		create_xpm(t_map *cub);
+void	set_cf_texture(t_map *cub);
+void	draw_floor_ceiling(t_map *cub);
+int		exit_game(t_map *cub);
+void	player_game(t_map *cub);
+int		game_hook(void *param);
+void	init_player_pos(t_map *cub);
+void	init_player(t_map *cub);
+void	init_raycast(t_map *cub, int x);
+int		key_released(int keycode, t_map *cub);
+int		key_pressed(int keycode, t_map *cub);
+void	move_ws(t_map *cub, int direction);
+void	move_ad(t_map *cub, int direction);
+void	rotate_player(t_map *cub, int direction);
+void	calc_side(t_map *cub);
+void	calc_ray(t_map *cub, int x);
+void	dda(t_map *cub);;
+void	init_screen(t_map *cub);
+void	xpm_to_img(t_map *cub, char *path, int index);
+void	set_walls(t_map *cub);
+double	calc_dis(t_map *cub);
+void	calc_wall(t_map *cub);
+void	map_liner(t_map *cub, int x);
+void	ft_free_array(char **arr);
 #endif

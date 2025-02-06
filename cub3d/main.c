@@ -1,15 +1,5 @@
 #include "cubthreed.h"
 
-int	init_map(t_map *cub)
-{
-	cub->mlx = mlx_init();
-	cub->mlx_win = mlx_new_window(cub->mlx, 1280, 720, "cub3D");
-	create_xpm(cub);
-	mlx_put_image_to_window(cub->mlx, cub->mlx_win, cub->wall_ea, 64, 64);
-    mlx_loop(cub->mlx);
-	return(0);
-}
-
 int ft_error(char *line)// int mi voidmi
 {
 	printf("Error\n%s\n", line);
@@ -40,33 +30,53 @@ int	map_read_check(t_map *cub, char *f_name)
 	read_chars(cub, f_name);
 	if (!(cub->tmp_map)) // map okuma işleminden sonra okunabilmiş mi kontrolü
 	{
-		free(cub->tmp_map);
+		free(cub->tmp_map); // !?! fd -1 ise zaten tmp_map freelendi
 		ft_error("Cannot read the map!");
 		return (1);
 	}
 	return (0);
 }
 
+void ft_free_struct(t_map *cub)
+{
+	free(cub->key);
+	free(cub->player);
+	free(cub->raycast);
+}
+
 int	main(int argc, char **argv)
 {
 	t_map	*cub;
-	//t_mlx	*minx;
 
 	cub = (t_map *)malloc(sizeof(t_map));
 	if (!cub)
 		return (1);
 	if (arg_checker(argc, argv) || map_read_check(cub, argv[1]))
 	{
-		free (cub);
+		free(cub);
+		return (1);
+	}
+	cub->key = ft_calloc(sizeof(t_keycode), 1);
+	cub->player = ft_calloc(sizeof(t_player), 1);
+	cub->raycast = ft_calloc(sizeof(t_raycast), 1);
+	if (!cub->key || !cub->player || !cub->raycast) //!?! birisi acılıp diğerleri acılmazsa leak verir mi
+	{
+		ft_free_array(cub->tmp_map);
+		free(cub);
 		return (1);
 	}
 	if(!split_map(cub))
 	{
+		ft_free_array(cub->tmp_map);
+		ft_free_struct(cub);
 		free(cub);
 		return (1);
 	}
 	if(map_check(cub))
+	{
+		cub_free(cub);
 		return (1);
+	}
 	control_wall(cub);
 	if(!handle_color(cub))
 	{
@@ -74,8 +84,24 @@ int	main(int argc, char **argv)
 		cub_free(cub);
 		return (1);
 	}
-	
 	handle_texture(cub);
+	
+	cub->mlx = mlx_init();
+	if (!cub->mlx)
+		ft_error("Mlx doesn't work!");
+	cub->win = mlx_new_window(cub->mlx, SCREENWIDTH, SCREENHEIGHT, "cub3D");
+	init_screen(cub);
+	init_player(cub);
+	set_walls(cub);
+
+	mlx_hook(cub->win, 2, (1L << 0), key_pressed, cub);
+	mlx_hook(cub->win, 3, (1L << 1), key_released, cub);
+	mlx_hook(cub->win, 17, 0, exit_game, cub);
+	mlx_loop_hook(cub->mlx, game_hook, cub);
+
+	mlx_loop(cub->mlx);
+
+	free(cub); // !?! her sey freelenmeli
 
 	//minx = (t_map *)malloc(sizeof(t_map));
 	//if (!minx)
@@ -83,7 +109,7 @@ int	main(int argc, char **argv)
 	
 
 	//init map
-	init_map(cub);
+	//init_map(cub);
 
 	//free and exit
 	return (0);

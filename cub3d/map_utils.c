@@ -7,13 +7,11 @@ int map_check(t_map *cub)
     if(cub->index_p < cub->index_no || cub->index_p < cub->index_so || cub->index_p < cub->index_ea ||\
         cub->index_p < cub->index_we || cub->index_p < cub->index_floor || cub->index_p < cub->index_sky)
     { // map en altta olması gerektiği için player satır indexi ve xpm rgb indekslerini karşılaştırp ona göre hata verir
-        cub_free(cub);
         ft_error("Invalid map, map location fail!");
         return (1);
     }
     if (locate_p(cub))
     {
-        cub_free(cub);
         ft_error("Invalid map! more than one player");
         return (1); // hata birden fazla player var
     }
@@ -27,7 +25,8 @@ int    map_line_fill(t_map *cub)
     int j;
 
     index_tot = 6;
-    cub->map_line = malloc(sizeof(char *) * (cub->first_len) + 1 - index_tot); // xpm ve rgb dısşındaki satır sayısı kadar yer aç
+    cub->map_line = malloc(sizeof(char *) * (cub->first_len) + 1 - index_tot);
+    cub->map_game = malloc(sizeof(char *) * (cub->first_len) + 1 - index_tot); // xpm ve rgb dısşındaki satır sayısı kadar yer aç
     i = 0;
     j = 0;
     while((cub->first_len - index_tot) >= j)
@@ -36,7 +35,10 @@ int    map_line_fill(t_map *cub)
             i != cub->index_sky && i != cub->index_floor) // xpm ve rgb dışındaki indexleri döner ve boş satırları da map_line içine atar
         {
             if(cub->tmp_map[i])
+            {
+                cub->map_game[j] = ft_strdup(cub->tmp_map[i]);
                 cub->map_line[j] = ft_strdup(cub->tmp_map[i]);
+            }
             j++;
         }
         i++;
@@ -55,7 +57,7 @@ char	chr_find(const char *str, t_map *cub)
 		if (str[i] == 'S' || str[i] == 'W' ||\
 			str[i] == 'N' || str[i] == 'E')
 		{
-            cub->p_direction = str[i];
+            cub->playertype = str[i];
 			return (i);
 		}
 		i++;
@@ -75,11 +77,14 @@ int locate_p(t_map *cub)
 		if(chr_find(cub->map_line[i], cub))
 		{
 			count++;
-			cub->p_y = i ;
-			cub->p_x = chr_find(cub->map_line[i], cub);
+			cub->player->y = (double)i;
+			cub->player->x = (double)chr_find(cub->map_line[i], cub);
+            cub->loc_py = i;
+			cub->loc_px = chr_find(cub->map_line[i], cub);
 		}
 		i++;
     }
+    cub->map_game[cub->loc_py][cub->loc_px] = '0';
     if(count != 1)
     {
         return(1);

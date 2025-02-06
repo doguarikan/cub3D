@@ -82,42 +82,45 @@ int set_color(t_map* cub)
 	int i;
 
 	if(coma_count(cub))
-		return (1);	
+		return (1);
 	tmp = ft_strtrim(cub->tmp_map[cub->index_floor] + 1, " \n");
 	if(ft_strchr(tmp , ' '))
+	{
+		free(tmp);
 		return (1);
+	}
 	cub->floor_char = ft_split(tmp, ',');
 	i = 0;
 	while(cub->floor_char[i])
 		i++;
 	if(i != 3)
+	{
+		free(tmp);
+		ft_free_array(cub->floor_char);
 		return (1);
+	}
+	free(tmp);
 	tmp = ft_strtrim(cub->tmp_map[cub->index_sky] + 1, " \n");
 	if(ft_strchr(tmp , ' '))
+	{
+		free(tmp);
+		ft_free_array(cub->floor_char);
 		return (1);
+	}
 	cub->sky_char = ft_split(tmp, ',');
 	i = 0;
 	while(cub->sky_char[i])
 		i++;
 	if(i != 3)
+	{
+		free(tmp);
+		ft_free_array(cub->floor_char);
+		ft_free_array(cub->sky_char);
 		return (1);
+	}
 	color_checker(cub);
 	return (0);
 }
-
-void handle_texture(t_map* cub)// dosya var mı kontrolü eklencek/ open close
-{
-	cub->tex_ea = ft_strtrim((cub->tmp_map[cub->index_ea] + 2)," ");
-	cub->tex_no = ft_strtrim((cub->tmp_map[cub->index_no] + 2)," ");
-	cub->tex_so = ft_strtrim((cub->tmp_map[cub->index_so] + 2)," ");
-	cub->tex_we = ft_strtrim((cub->tmp_map[cub->index_we] + 2)," ");
-	
-	cub->tex_ea = ft_strtrim((cub->tex_ea),"\n");
-	cub->tex_no = ft_strtrim((cub->tex_no),"\n");
-	cub->tex_so = ft_strtrim((cub->tex_so),"\n");
-	cub->tex_we = ft_strtrim((cub->tex_we),"\n");
-}
-
 
 void color_checker(t_map *cub) // rgb aralığı
 {
@@ -128,7 +131,7 @@ void color_checker(t_map *cub) // rgb aralığı
 	{
 		if(ft_strlen(cub->floor_char[i]) == 0 || ft_strlen(cub->floor_char[i]) > 3)
 		{
-			cub_free(cub);
+			ft_free_color(cub);
 			ft_error("Invalid RGB");
 			exit (1);
 		}
@@ -138,7 +141,7 @@ void color_checker(t_map *cub) // rgb aralığı
 	{
 		if(ft_strlen(cub->sky_char[i]) == 0 || ft_strlen(cub->sky_char[i]) > 3)
 		{
-			cub_free(cub);
+			ft_free_color(cub);
 			ft_error("Invalid RGB");
 			exit (1);
 		}
@@ -167,7 +170,9 @@ void	color_atoi(t_map *cub)
 	}
 	if(color_range(cub))
 	{
-		cub_free(cub);
+		free(cub->col_floor);
+		free(cub->col_sky);
+		ft_free_color(cub);
 		ft_error("Color range!");
 		exit (0);
 	}
@@ -192,4 +197,32 @@ int	color_range(t_map *cub)
 		i++;
 	}
 	return (0);
+}
+
+void handle_texture(t_map* cub)// dosya var mı kontrolü eklencek/ open close
+{
+	char *ea;
+	char *no;
+	char *so;
+	char *we;
+
+	ea = ft_strtrim((cub->tmp_map[cub->index_ea] + 2), " ");
+	no = ft_strtrim((cub->tmp_map[cub->index_no] + 2), " ");
+	so = ft_strtrim((cub->tmp_map[cub->index_so] + 2), " ");
+	we = ft_strtrim((cub->tmp_map[cub->index_we] + 2), " ");
+	cub->tex_ea = ft_strtrim((ea), "\n");
+	cub->tex_no = ft_strtrim((no), "\n");
+	cub->tex_so = ft_strtrim((so), "\n");
+	cub->tex_we = ft_strtrim((we), "\n");
+	free(ea);
+	free(no);
+	free(so);
+	free(we);
+}
+
+void ft_free_color(t_map *cub)
+{
+	ft_free_array(cub->floor_char);
+	ft_free_array(cub->sky_char);
+	cub_free(cub);
 }
