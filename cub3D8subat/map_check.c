@@ -29,7 +29,7 @@ int check_dup(t_map *cub, int x, int y)
 	if (x < 0 || x >= (int)ft_strlen(cub->is_dup[y]))
 		return (0);
 	
-	if (ft_whitespace(cub->is_dup[y][x]))
+	if (ft_whitespace(cub->is_dup[y][x]) || cub->is_dup[y][x] == '\n')
 		return (0);
 		
 	return (1);
