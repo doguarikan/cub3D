@@ -35,8 +35,8 @@ typedef struct s_keycode
 
 typedef struct s_player
 {
-	double		x;
-	double		y;
+	double		loc_x; // x->loc_x playerin bulunduğu indeksteki tam konumu
+	double		loc_y;	// y->loc_y playerin bulunduğu indeksteki tam konumu
 	double		dir_x;
 	double		dir_y;
 	double		plane_x;
@@ -46,21 +46,21 @@ typedef struct s_player
 typedef struct s_raycast
 {
 	double		camera_x;
-	double		raydir_x;
-	double		raydir_y;
-	double		sidedist_x;
-	double		sidedist_y;
-	double		deltadist_x;
-	double		deltadist_y;
-	int			step_x;
-	int			step_y;
-	int			side1;
-	int			hit;
+	double		raydir_x; // ışının playera göre ışının x ekseni yönü
+	double		raydir_y; // ışının playera göre ışının y ekseni yönü
+	double		next_hit_dist_x; // sidedist_x->dext_hit_dist_x ışının sonraki çarpacağı x eksenine uzaklığı
+	double		next_hit_dist_y;// sidedist_y->dext_hit_dist_y ışının sonraki çarpacağı y eksenine uzaklığı
+	double		dist_x_pstep; // deltadist_x ->
+	double		dist_y_pstep;
+	int			step_x; // ışının atacağı adım yönü x duzleminde
+	int			step_y; // ışının atacağı adım yönü y duzleminde
+	int			wall_hit_dir; // side1 -> wall_hit_dir carpan eksenin baktığı yön, en sonda duvar olur
+	int			wall_hit; // hit->wall_hit
 
 	int			tex_x;
 	int			tex_y;
 
-	double		perp_dist;
+	double		perpend_dist; //prep_dist -> perpend_dist duvara olan dik uzaklık
 	int			height;
 	int			start_y;
 	int			end_y;
@@ -130,8 +130,8 @@ typedef struct s_map
 
 	int			playercount;
 	char		playertype;
-	int			loc_px;
-	int			loc_py;
+	int			loc_px_index; // loc_px -> loc_px_index player index x location
+	int			loc_py_index; // loc_py -> loc_py_index player index x location
 	int			row;
 	int			col;
 	
@@ -180,11 +180,11 @@ void	move_ad(t_map *cub, int direction);
 void	rotate_player(t_map *cub, int direction);
 void	calc_side(t_map *cub);
 void	calc_ray(t_map *cub, int x);
-void	dda(t_map *cub);;
+void	dda(t_map *cub);
 void	init_screen(t_map *cub);
 void	xpm_to_img(t_map *cub, char *path, int index);
 void	set_walls(t_map *cub);
-double	calc_dis(t_map *cub);
+double	calc_perpdis(t_map *cub);
 void	calc_wall(t_map *cub);
 void	map_liner(t_map *cub, int x);
 void	cub_free(t_map *cub);
