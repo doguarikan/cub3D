@@ -20,8 +20,8 @@ void	init_player_pos(t_map *cub)
 
 void	init_player(t_map *cub)
 {
-	cub->player->x = (double)cub->loc_px;
-	cub->player->y = (double)cub->loc_py;
+	cub->player->loc_x = (double)cub->loc_px_index;
+	cub->player->loc_y = (double)cub->loc_py_index;
 	if (cub->playertype == 'N')
 	{
 		cub->player->dir_x = 0;
@@ -46,9 +46,9 @@ void	init_raycast(t_map *cub, int x)
 		+ cub->player->plane_x * cub->raycast->camera_x;
 	cub->raycast->raydir_y = cub->player->dir_y
 		+ cub->player->plane_y * cub->raycast->camera_x;
-	cub->loc_px = (int)cub->player->x;
-	cub->loc_py = (int)cub->player->y;
-	cub->raycast->deltadist_x = fabs(1 / cub->raycast->raydir_x);
-	cub->raycast->deltadist_y = fabs(1 / cub->raycast->raydir_y);
-	cub->raycast->hit = 0;
+	cub->loc_px_index = (int)cub->player->loc_x;
+	cub->loc_py_index = (int)cub->player->loc_y;
+	cub->raycast->dist_x_pstep; = fabs(1 / cub->raycast->raydir_x); // ışının yonunu bire boluyorum cunku bir birimde ne kadar ilerleyeceğini buluyorum
+	cub->raycast->dist_y_pstep; = fabs(1 / cub->raycast->raydir_y);
+	cub->wall_hit = 0;
 }
