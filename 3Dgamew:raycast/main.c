@@ -11,8 +11,8 @@ int	arg_checker(int argc, char **argv)
 		return (1);
 	}
 	len = ft_strlen(argv[1]);
-	if (argv[1][len - 1] != 'b' && argv[1][len - 2] != 'u' &&
-			argv[1][len - 3] != 'c' && argv[1][len - 4] != '.')
+	if (argv[1][len - 1] != 'b' || argv[1][len - 2] != 'u' ||
+			argv[1][len - 3] != 'c' || argv[1][len - 4] != '.')
 	{
 		ft_error("File extension must be .cub!\n");
 		return (1);
